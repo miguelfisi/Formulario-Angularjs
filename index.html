@@ -1,0 +1,82 @@
+<html>
+   <head>
+       <title>Angularjs - 1</title>
+   </head> 
+   <body ng-app="main" ng-controller="ContactController">
+      Name:
+      <input type="text" ng-model="contact.name"/>
+      <br/>
+      Address:
+      <input type="text" ng-model="contact.address"/>
+      <br/>
+      Telephone:
+      <input type="telephone" ng-model="contact.telephone"/>
+      <br/>
+      Email:
+      <input type="email" ng-model="contact.email"/>
+      <br/>
+      Age:
+      <input type="number" ng-model="contact.age"/>
+      
+      <br/>
+      
+      <button type="button" ng-click="actions.addContact()"> Add Contact </button>
+      
+      
+      {{ contact }}
+      
+      <br/>
+      
+      List of contacts ({{contacts.length}} item) :
+      
+      <br/>
+      
+      {{contacts}}
+      
+      <div ng-repeat="item in contacts">
+        
+            {{$index +1}}  {{item.name}} {{item.address}} {{item.telephone}} {{item.email}} {{item.age}}
+           
+           <br/>
+      </div>
+      
+       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+       
+       
+       <script>
+       var app= angular.module( "main", []);
+       app.controller("ContactController", function($scope) {
+           $scope.contact={};
+           
+           $scope.contacts=[]; 
+           $scope.actions={};
+           
+           $scope.actions.addContact=addContact;
+           
+           function addContact() {
+               var contactCopy= angular.copy($scope.contact);
+               $scope.contacts.push(contactCopy);
+               
+           };
+               
+        /*
+        $scope.actions.addContact=function() {
+               
+               var contactCopy = angular.copy($scope.contact);
+               
+               $scope.contacts.push(contactCopy);
+               
+           };
+        */  
+           
+           });
+             
+       </script>
+      
+       
+              
+                     
+                                   
+   </body>
+    
+</html>
