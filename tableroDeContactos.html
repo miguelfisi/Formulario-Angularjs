@@ -25,8 +25,6 @@
       
       {{ contact }}
       
-      
-      
       <div ng-show="contacts.length>0">
           
           <br/> 
@@ -39,19 +37,10 @@
             <button type="button" ng-click="actions.removeContact($index)">Remove</button>
             
              <button type="button" ng-click="actions.editContact($index)">Edit</button>
-             
-             
-          </div> 
-      
-      </div>
-      
-      
-      
-      
-      
+         </div> 
+     </div>
+    
        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-       
-       
        <script>
        var app= angular.module( "main", []);
        app.controller("ContactController", function($scope) {
@@ -64,18 +53,13 @@
           
            $scope.actions.cleanContact= cleanContact;
            $scope.actions.removeContact=removeContact;
-           
            $scope.actions.editContact=editContact;
-           
-           
            function addContact() {
                var contactCopy= angular.copy($scope.contact);
-             
                if (angular.isDefined(contactCopy.id)){
                    //edit contact
                    var indexToEdit=null;
-                   angular.forEach($scope.contacts, function(item, index) {
-                       
+                   angular.forEach($scope.contacts, function(item, index) {   
                        if(item.id===contactCopy.id) {
                            indexToEdit=index;
                        }
@@ -84,23 +68,18 @@
                    if(indexToEdit !== null) {
                        $scope.contacts[indexToEdit] = contactCopy;
                    }
-                   
-                   
                } else {
                    //add contact
                    var date= new Date();
                    var id=date.getTime();// time in milliseconds
-                    contactCopy.id=id;
-                   
-                   
+                    contactCopy.id=id;  
                $scope.contacts.push(contactCopy);    
                      cleanContact();// no importa si se pone, pues el tiempo en milisegundos pone el ID, pero me limpia la informacion de las propiedades
                   
                }
                    
            }
-           
-           
+      
         function cleanContact() {
             $scope.contact ={};
         }    
@@ -114,8 +93,7 @@
                $scope.contact=angular.copy($scope.contacts[index]);
                
            }
-        
-               
+   
         /*
         $scope.actions.addContact=function() {
                
@@ -125,15 +103,10 @@
                
            };
         */  
-           
            });
              
        </script>
       
-       
-              
-                     
-                                   
    </body>
     
 </html>
