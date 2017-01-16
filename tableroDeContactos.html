@@ -1,0 +1,139 @@
+<html>
+   <head>
+       <title>Angularjs - 1</title>
+   </head> 
+   <body ng-app="main" ng-controller="ContactController">
+      Name:
+      <input type="text" ng-model="contact.name"/>
+      <br/>
+      Address:
+      <input type="text" ng-model="contact.address"/>
+      <br/>
+      Telephone:
+      <input type="telephone" ng-model="contact.telephone"/>
+      <br/>
+      Email:
+      <input type="email" ng-model="contact.email"/>
+      <br/>
+      Age:
+      <input type="number" ng-model="contact.age"/>
+      
+      <br/>
+      
+      <button type="button" ng-click="actions.addContact()"> Add Contact </button>
+  <button type="button" ng-click="actions.cleanContact()">Clean Contact</button>
+      
+      {{ contact }}
+      
+      
+      
+      <div ng-show="contacts.length>0">
+          
+          <br/> 
+          List of contacts ({{contacts.length}} item) :
+
+          <div ng-repeat="item in contacts">
+        
+            {{$index +1}} {{item.id}} {{item.name}} {{item.address}} {{item.telephone}} {{item.email}} {{item.age}}
+            
+            <button type="button" ng-click="actions.removeContact($index)">Remove</button>
+            
+             <button type="button" ng-click="actions.editContact($index)">Edit</button>
+             
+             
+          </div> 
+      
+      </div>
+      
+      
+      
+      
+      
+       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+       
+       
+       <script>
+       var app= angular.module( "main", []);
+       app.controller("ContactController", function($scope) {
+           
+           cleanContact();
+           $scope.contacts=[]; 
+           $scope.actions={};
+           
+           $scope.actions.addContact=addContact;
+          
+           $scope.actions.cleanContact= cleanContact;
+           $scope.actions.removeContact=removeContact;
+           
+           $scope.actions.editContact=editContact;
+           
+           
+           function addContact() {
+               var contactCopy= angular.copy($scope.contact);
+             
+               if (angular.isDefined(contactCopy.id)){
+                   //edit contact
+                   var indexToEdit=null;
+                   angular.forEach($scope.contacts, function(item, index) {
+                       
+                       if(item.id===contactCopy.id) {
+                           indexToEdit=index;
+                       }
+                   });
+                   
+                   if(indexToEdit !== null) {
+                       $scope.contacts[indexToEdit] = contactCopy;
+                   }
+                   
+                   
+               } else {
+                   //add contact
+                   var date= new Date();
+                   var id=date.getTime();// time in milliseconds
+                    contactCopy.id=id;
+                   
+                   
+               $scope.contacts.push(contactCopy);    
+                     cleanContact();// no importa si se pone, pues el tiempo en milisegundos pone el ID, pero me limpia la informacion de las propiedades
+                  
+               }
+                   
+           }
+           
+           
+        function cleanContact() {
+            $scope.contact ={};
+        }    
+           
+         function removeContact(index) {
+             
+             $scope.contacts.splice(index,1);
+         }
+           
+           function editContact (index) {
+               $scope.contact=angular.copy($scope.contacts[index]);
+               
+           }
+        
+               
+        /*
+        $scope.actions.addContact=function() {
+               
+               var contactCopy = angular.copy($scope.contact);
+               
+               $scope.contacts.push(contactCopy);
+               
+           };
+        */  
+           
+           });
+             
+       </script>
+      
+       
+              
+                     
+                                   
+   </body>
+    
+</html>
